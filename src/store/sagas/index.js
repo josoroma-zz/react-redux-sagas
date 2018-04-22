@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects';
 
-import { loginActionWatcher, logoutActionWatcher, fetchSelfActionWatcher } from '../sagas/session';
+import { loginActionWatcher, logoutActionWatcher, fetchSelfActionWatcher } from './session';
 
 /**
  * Redux Saga uses the `all` function to combine multiple sagas to one root saga for the Redux store.
