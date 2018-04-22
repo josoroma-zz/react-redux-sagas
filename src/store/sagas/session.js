@@ -1,4 +1,25 @@
 /**
+ * Watchers watch for a dispatch operation of a certain type of action and then call a Worker function.
+ *
+ * Since it’s a watcher function, it needs to be run at the beginning of the application
+ * so that it is ready to respond to the action dispatch that triggers it.
+ *
+ * It uses functions provided by redux-saga like `takeEvery` and `takeLatest`, to run a Worker function
+ * whenever it is triggered. takeEvery is used when we want to run a Worker function every time
+ * the watched action is dispatched while takeLatest is used when we want to run a Worker
+ * function for the latest trigger.
+ */
+
+/**
+ * Workers are responsible for the side effects.
+ *
+ * They use saga helpers like `call`, `put` and `take` to perform a number of asynchronous operations using `yield`
+ * provided by generator function. `call` is for making asynchronous calls like `axios` request, `put` is for
+ * dispatching an action that generally is used to change the redux state which in turn changes the
+ * presentation component in the application while `take` has similar application to `takeEvery`.
+ */
+
+/**
  * `push` - Pushes a new location to history, becoming the current location.
  */
 import { push } from 'react-router-redux';
@@ -46,15 +67,6 @@ function loginApi(authParams) {
 }
 
 /**
- * Workers are responsible for the side effects.
- *
- * They use saga helpers like `call`, `put` and `take` to perform a number of asynchronous operations using `yield`
- * provided by generator function. `call` is for making asynchronous calls like `axios` request, `put` is for
- * dispatching an action that generally is used to change the redux state which in turn changes the
- * presentation component in the application while `take` has similar application to `takeEvery`.
- */
-
-/**
  * Saga function that handles the side effect when the loginActionWatcher is triggered.
  */
 export function* loginActionEffect(loginAction) {
@@ -79,18 +91,6 @@ export function* loginActionEffect(loginAction) {
     if (reject) reject(e);
   }
 }
-
-/**
- * Watchers watch for a dispatch operation of a certain type of action and then call a Worker function.
- *
- * Since it’s a watcher function, it needs to be run at the beginning of the application
- * so that it is ready to respond to the action dispatch that triggers it.
- *
- * It uses functions provided by redux-saga like `takeEvery` and `takeLatest`, to run a Worker function
- * whenever it is triggered. takeEvery is used when we want to run a Worker function every time
- * the watched action is dispatched while takeLatest is used when we want to run a Worker
- * function for the latest trigger.
- */
 
 /**
  * Saga function that is initiated in the beginning to be able to listen to LOG_IN_WATCHER action.
