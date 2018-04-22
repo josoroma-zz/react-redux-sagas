@@ -62,4 +62,13 @@ const mapStateToProps = ({ session }) => ({
  */
 const mapDispatchToProps = dispatch => bindActionCreators({ getUserProfileWatcher, logoutWatcher }, dispatch);
 
+/**
+ * connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options])
+ *
+ * Connects a React component to a Redux store. connect is a facade around
+ * connectAdvanced,providing a convenient API for the most common use cases.
+ *
+ * It does not modify the component class passed to it; instead, it returns
+ * a new,connected component class for you to use.
+ */
 export default connect(mapStateToProps, mapDispatchToProps)(AppRoot);
