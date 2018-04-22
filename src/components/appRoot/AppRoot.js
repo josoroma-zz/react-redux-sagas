@@ -14,6 +14,7 @@ class AppRoot extends Component {
   }
 
   logout = () => {
+    // Thanks to `mapStateToProps`.
     this.props.logoutWatcher();
   };
 
@@ -45,6 +46,10 @@ AppRoot.propTypes = {
   logoutWatcher: PropTypes.func
 };
 
+/**
+ * The results of mapStateToProps must be a plain object, which will be merged into the component’s props.
+ * If we don't want to subscribe to store updates, pass null or undefined in place of mapStateToProps.
+ */
 const mapStateToProps = ({ session }) => ({
   session
 });
