@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
-// CSS
+/**
+ * Assets - Styles
+ */
 import './public';
 
 import App from './App';
