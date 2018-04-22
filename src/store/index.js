@@ -65,6 +65,15 @@ const store = createStore(
   )
 );
 
+/**
+ * Dynamically Run Saga.
+ * Can be used to run Sagas only after the applyMiddleware phase.
+ *
+ * Returns a Task descriptor.
+ * The Task interface specifies the result of running a Saga using `fork`, `middleware.run` or `runSaga`.
+ *
+ * - https://redux-saga.js.org/docs/api
+ */
 sagaMiddleware.run(rootSaga);
 
 export default store;
