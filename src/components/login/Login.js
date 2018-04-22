@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 import * as routes from '../../constants/routes';
 
-/**
- * Component to authenticate routes.
- */
-class PrivateRoute extends Component {
+import LoginForm from './LoginForm';
+
+class Login extends Component {
   state = {
     isLoggedIn: true
   };
@@ -26,8 +25,18 @@ class PrivateRoute extends Component {
   render() {
     let { isLoggedIn } = this.state;
 
-    return isLoggedIn ? <Route {...this.props} /> : <Redirect to={routes.LOGIN} />;
+    return isLoggedIn ? (
+      <Redirect to={routes.APP_ROOT} />
+    ) : (
+      <div className="wrapper">
+        <div className="login-wrapper">
+          <div className="login-box">
+            <LoginForm />
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
-export default PrivateRoute;
+export default Login;
