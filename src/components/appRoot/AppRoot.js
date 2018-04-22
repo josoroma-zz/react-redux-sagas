@@ -34,6 +34,11 @@ class AppRoot extends Component {
   }
 }
 
+/**
+ * Typechecking With PropTypes.
+ *
+ * - https://reactjs.org/docs/typechecking-with-proptypes.html
+ */
 AppRoot.propTypes = {
   session: PropTypes.object,
   getUserProfileWatcher: PropTypes.func,
