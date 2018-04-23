@@ -40,7 +40,7 @@ import {
 /**
  * Utils.
  */
-import axios from '../../utils/axios';
+// import axios from '../../utils/axios';
 import * as alert from '../../utils/alert';
 
 /**
@@ -56,6 +56,9 @@ import { fillUserProfile, authError, clearSession } from '../actionCreators/sess
  * Login Operation using Saga.
  */
 function loginApi(authParams) {
+  const errorMessage = { message: 'Email/Password incorrect' };
+
+  /*
   return axios.request({
     method: 'post',
     url: `/oauth/login`,
@@ -63,6 +66,22 @@ function loginApi(authParams) {
       'Content-Type': 'application/json'
     },
     data: authParams
+  });
+  */
+
+  // Mimicks previous axios request.
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (authParams.email === 'admin@localhost.com' && authParams.password === 'admin1234') {
+        resolve({
+          data: {
+            access_token: '333.999'
+          }
+        });
+      } else {
+        reject(errorMessage);
+      }
+    }, 2000);
   });
 }
 
@@ -105,12 +124,29 @@ export function* loginActionWatcher() {
  * Fetch Self Operation using Saga.
  */
 function fetchSelfApi(authParams) {
+  /*
   return axios.request({
     method: 'get',
     url: `/users/self`,
     headers: {
       'Content-Type': 'application/json'
     }
+  });
+  */
+
+  // Mimicks previous axios request.
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const user = {
+        firstName: 'test',
+        lastName: 'tester',
+        email: 'test@test.com',
+        address: 'testington',
+        phoneNumber: '1234567890'
+      };
+
+      resolve(user);
+    }, 2000);
   });
 }
 
