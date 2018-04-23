@@ -1,29 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { withStyles } from 'material-ui/styles';
+import Card, { CardContent } from 'material-ui/Card';
+
+const styles = {
+  card: {}
+};
+
 const UserDetails = props => {
   const { user } = props;
   const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
-    <div className="user-details">
-      <div className="user-detail-block">
-        <div className="user-detail-title">Name:</div>
-        <div className="user-detail-info">{fullName}</div>
-      </div>
-      <div className="user-detail-block">
-        <div className="user-detail-title">Email:</div>
-        <div className="user-detail-info">{user.email}</div>
-      </div>
-      <div className="user-detail-block">
-        <div className="user-detail-title">Address:</div>
-        <div className="user-detail-info">{user.address}</div>
-      </div>
-      <div className="user-detail-block">
-        <div className="user-detail-title">Phone:</div>
-        <div className="user-detail-info">{user.phoneNumber}</div>
-      </div>
-    </div>
+    <Card>
+      <CardContent>{fullName}</CardContent>
+    </Card>
   );
 };
 
@@ -37,4 +29,4 @@ UserDetails.propTypes = {
   })
 };
 
-export default UserDetails;
+export default withStyles(styles)(UserDetails);

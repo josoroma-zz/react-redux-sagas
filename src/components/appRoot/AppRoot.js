@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import UserDetails from './UserDetails';
 
 import { getUserProfileWatcher, logoutWatcher } from '../../store/actionCreators/session';
+
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
+
+const styles = theme => ({
+  root: {
+    padding: theme.spacing.unit * 2
+  },
+  logout: {
+    marginTop: '30px'
+  }
+});
 
 class AppRoot extends Component {
   componentDidMount() {
@@ -19,17 +31,15 @@ class AppRoot extends Component {
   };
 
   render() {
-    const { session } = this.props;
+    const { classes, session } = this.props;
 
     return (
-      <div className="wrapper">
-        <div className="login-box">
-          <h1>AppRoot</h1>
-          {session.user ? <UserDetails user={this.props.session.user} /> : <div />}
-          <button className="error" onClick={this.logout}>
-            Logout
-          </button>
-        </div>
+      <div className={classes.root}>
+        <h1>AppRoot</h1>
+        {session.user ? <UserDetails user={this.props.session.user} /> : <div />}
+        <Button onClick={this.logout} className={classes.logout} variant="raised" color="primary" size="small">
+          Logout
+        </Button>
       </div>
     );
   }
@@ -43,7 +53,8 @@ class AppRoot extends Component {
 AppRoot.propTypes = {
   session: PropTypes.object,
   getUserProfileWatcher: PropTypes.func,
-  logoutWatcher: PropTypes.func
+  logoutWatcher: PropTypes.func,
+  classes: PropTypes.object.isRequired
 };
 
 /**
@@ -71,4 +82,5 @@ const mapDispatchToProps = dispatch => bindActionCreators({ getUserProfileWatche
  * It does not modify the component class passed to it; instead, it returns
  * a new,connected component class for you to use.
  */
-export default connect(mapStateToProps, mapDispatchToProps)(AppRoot);
+
+export default compose(withStyles(styles, { name: 'AppRoot' }), connect(mapStateToProps, mapDispatchToProps))(AppRoot);

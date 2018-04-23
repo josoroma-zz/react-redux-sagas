@@ -13,12 +13,6 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl } from 'material-ui/Form';
 
 const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  flex: {
-    flex: 1
-  },
   formControl: {
     margin: theme.spacing.unit
   },

@@ -138,11 +138,11 @@ function fetchSelfApi(authParams) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const user = {
-        firstName: 'test',
+        firstName: 'admin',
         lastName: 'tester',
-        email: 'test@test.com',
-        address: 'testington',
-        phoneNumber: '1234567890'
+        email: 'admin@localhost.com',
+        address: 'localhost.com',
+        phoneNumber: '0123456789'
       };
 
       resolve(user);
