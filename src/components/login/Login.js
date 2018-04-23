@@ -25,17 +25,7 @@ class Login extends Component {
   render() {
     let { isLoggedIn } = this.state;
 
-    return isLoggedIn ? (
-      <Redirect to={routes.APP_ROOT} />
-    ) : (
-      <div className="wrapper">
-        <div className="login-wrapper">
-          <div className="login-box">
-            <LoginForm />
-          </div>
-        </div>
-      </div>
-    );
+    return isLoggedIn ? <Redirect to={routes.APP_ROOT} /> : <LoginForm />;
   }
 }
 

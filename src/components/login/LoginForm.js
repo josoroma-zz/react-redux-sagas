@@ -1,9 +1,36 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 
 import { loginWatcher } from '../../store/actionCreators/session';
+
+import { withStyles } from 'material-ui/styles';
+import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Button from 'material-ui/Button';
+
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl } from 'material-ui/Form';
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  flex: {
+    flex: 1
+  },
+  formControl: {
+    margin: theme.spacing.unit
+  },
+  formActions: {
+    marginTop: '30px',
+    marginBottom: '10px'
+  },
+  error: {
+    color: '#ccc',
+    fontSize: '11px'
+  }
+});
 
 class LoginForm extends Component {
   state = {
@@ -22,7 +49,7 @@ class LoginForm extends Component {
   /**
    * Simple validation logic is used here.
    *
-   * `formik` can be used for forms and`validation` library can be used with formik to validate the forms.
+   * Can be used with formik to validate forms.
    *
    * @returns {Promise}
    */
@@ -39,6 +66,7 @@ class LoginForm extends Component {
 
       if (email && !emailRegex.test(email)) errors.email = 'Please enter a valid email address';
       if (password && password.length < 8) errors.password = 'Password must be greater than or equalt to 8 characters';
+
       if (Object.keys(errors).length > 0) {
         reject(errors);
       } else {
@@ -49,6 +77,7 @@ class LoginForm extends Component {
 
   onSubmit = event => {
     event.preventDefault();
+
     this.validate()
       .then(() => {
         this.setState({
@@ -70,6 +99,7 @@ class LoginForm extends Component {
 
   handleEmailChange = event => {
     event.preventDefault();
+
     this.setState({
       email: event.target.value
     });
@@ -83,26 +113,41 @@ class LoginForm extends Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     let { email, password, errors } = this.state;
 
     return (
       <form onSubmit={this.onSubmit}>
-        <input type="email" placeholder="Email" value={email} onChange={this.handleEmailChange} />
-        <span className="error">{errors.email}</span>
-        <input type="password" placeholder="Password" value={password} onChange={this.handlePasswordChange} />
-        <span className="error">{errors.password}</span>
-        <button type="submit" className="success">
-          {this.state.isSubmitting ? <div className="loader" /> : `Login`}
-        </button>
+        <Card className={classes.card}>
+          <CardContent>
+            <FormControl className={classes.formControl} aria-describedby="name-helper-text">
+              <InputLabel htmlFor="name-helper">Email</InputLabel>
+              <Input type="email" id="email-helper" value={email} onChange={this.handleEmailChange} />
+              <span className={classes.error}>{errors.email}</span>
+            </FormControl>
+            <FormControl className={classes.formControl} aria-describedby="name-helper-text">
+              <InputLabel htmlFor="password-helper">Password</InputLabel>
+              <Input type="password" id="password-helper" value={password} onChange={this.handlePasswordChange} />
+              <span className={classes.error}>{errors.password}</span>
+            </FormControl>
+            <CardActions className={classes.formActions}>
+              <Button type="submit" variant="raised" color="primary" className="success" size="small">
+                {this.state.isSubmitting ? <div className="loader" /> : `Login`}
+              </Button>
+            </CardActions>
+          </CardContent>
+        </Card>
       </form>
     );
   }
 }
 
 LoginForm.propTypes = {
-  loginWatcher: PropTypes.func
+  loginWatcher: PropTypes.func,
+  classes: PropTypes.object.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators({ loginWatcher }, dispatch);
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default compose(withStyles(styles, { name: 'LoginForm' }), connect(null, mapDispatchToProps))(LoginForm);
