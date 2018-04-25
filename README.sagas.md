@@ -88,7 +88,7 @@ yarn add jest-enzyme -D
 
 ### `redux-saga-test-plan` && `jest-localstorage-mock`
 
-Test Redux Saga with an easy plan. 
+Test Redux Saga with an easy plan.
 
 - https://github.com/jfairbank/redux-saga-test-plan
 
@@ -110,9 +110,83 @@ yarn add enzyme enzyme-adapter-react-16 react-test-renderer jest-enzyme sinon re
 
 - https://www.npmjs.com/package/jest-localstorage-mock#in-create-react-app
 
+- https://redux.js.org/recipes/writing-tests
+
 ```
 yarn add enzyme enzyme-adapter-react-16 react-test-renderer jest-enzyme redux-saga-test-plan jest-localstorage-mock -D
 ```
+
+### Unit Testing
+
+- https://github.com/jfairbank/redux-saga-test-plan/tree/master/docs/unit-testing
+
+### Please install one more tool redux-mock-store
+
+- https://github.com/arnaudbenard/redux-mock-store
+
+```
+yarn add redux-mock-store -D
+```
+
+### Unit Test - TDD - Couple our tests to our implementation
+
+- https://facebook.github.io/jest/docs/en/mock-functions.html
+
+- http://redux-saga-test-plan.jeremyfairbank.com/unit-testing/general-assertions.html
+
+- http://redux-saga-test-plan.jeremyfairbank.com/integration-testing/state.html
+
+```
+import React from 'react';
+import { testSaga } from 'redux-saga-test-plan';
+
+import { push } from 'react-router-redux';
+
+import * as actions from '../../../constants/actions';
+
+import { loginActionEffect, fetchSelfActionEffect, logoutActionEffect } from '../../../store/sagas/session';
+
+describe('When Saga Session Effects are triggered', () => {
+  it('should trigger logoutActionEffect() Saga', () => {
+    const clearSession = jest.fn(() => ({ type: actions.CLEAR_SESSION, payload: null }));
+
+    const expectLocalStorageClearToHaveBeenCalled = jest.fn(() => {
+      localStorage.clear();
+      expect(localStorage.clear).toHaveBeenCalledTimes(1);
+    });
+
+    testSaga(logoutActionEffect)
+      .next(expectLocalStorageClearToHaveBeenCalled())
+      .put(clearSession())
+      .next()
+      .put(push('/login'))
+      .next()
+      .isDone();
+  });
+});
+```
+
+### Examples
+
+- https://hackernoon.com/unit-testing-redux-connected-components-692fa3c4441c
+
+- https://github.com/arnaudbenard/redux-mock-store#asynchronous-action
+
+- https://github.com/reactjs/redux/blob/master/docs/recipes/WritingTests.md
+
+- https://medium.com/netscape/testing-a-react-redux-app-using-jest-and-enzyme-b349324803a9
+
+**enzyme/__tests__/checkbox_with_label.test.js**
+
+- https://github.com/facebook/jest/blob/master/examples/enzyme/__tests__/checkbox_with_label.test.js
+
+**react/__tests__/checkbox_with_label.test.js**
+
+- https://github.com/facebook/jest/blob/master/examples/react/__tests__/checkbox_with_label.test.js
+
+### jest.fn()
+
+Creates a mock function, it doesn’t actually do the work that it stands in place of; it merely simulates it, records attempts to call it, and optionally looks for arguments or fakes return values.
 
 ## Inspired by
 
